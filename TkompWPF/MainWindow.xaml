@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TkompWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TkompWPF" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="153*"/>
             <RowDefinition Height="281*"/>
         </Grid.RowDefinitions>
-        <GroupBox x:Name="LoginForm" Header="Login form:" VerticalAlignment="Center" Width="NaN" Height="140">
+        <GroupBox x:Name="LoginForm" Header="SQL Server:" VerticalAlignment="Center" Width="NaN" Height="140">
             
                 
                     <Grid>
@@ -31,8 +31,8 @@
                         <Label x:Name="PasswordLabel" Content="Password:" Grid.Column="0" Grid.Row="1"/>
                         <PasswordBox x:Name="PasswordText" Height="20" Width="100" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"  />
 
-                        <Button x:Name="DBTestButton" Content="Testuj połączenie" Grid.Column="0" Grid.Row="2" Click="DBTestButton_Click"/>
-                        <Button x:Name="DBGetDataButton" Content="Załaduj dane" Grid.Column="1" Grid.Row="2" IsEnabled="False" Click="DBGetDataButton_Click"/>
+                        <Button x:Name="TestButton" Content="Testuj połączenie" Grid.Column="0" Grid.Row="2" Click="TestButton_Click"/>
+                        <Button x:Name="GetDataButton" Content="Załaduj dane" Grid.Column="1" Grid.Row="2" IsEnabled="False" Click="GetDataButton_Click"/>
 
                 </Grid>
                     

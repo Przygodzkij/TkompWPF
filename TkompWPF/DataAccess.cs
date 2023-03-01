@@ -19,10 +19,10 @@ namespace TkompWPF {
         private static string _connectionPort = @"1433";
         private static string _connectionDatabase = @"DevData";
        
-        public string Login { get { return _login; } set { _login = value; } }
-        public string Password { get { return _password; } set { _password = value; } }
+        public string Login {  set { _login = value; } }
+        public string Password {  set { _password = value; } }
 
-        private SqlConnection GetConnection() {
+        private SqlConnection GetSQLConnection() {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder() {
                 DataSource = _connectionServer,
                 InitialCatalog = _connectionDatabase,
@@ -43,27 +43,26 @@ namespace TkompWPF {
                             join sys.columns sysCol on sysTab.object_id = sysCol.object_id
                             join sys.systypes sysType on sysType.xtype = sysCol.system_type_id
                             where sysType.name like 'int'";
-            SqlCommand Command = new SqlCommand(Query, GetConnection());
+
+            SqlCommand Command = new SqlCommand(Query, GetSQLConnection());
             DataTable sqlResultTable = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(Command);
             adapter.Fill(sqlResultTable);
             return sqlResultTable;
         }
     
+        
+        public bool VerifyConnection(string login, string password) {
 
-        public bool SetConnection() {
+            Login = login;
+            Password = password;
+            
 
-
-
-
-            SqlConnection cnn = GetConnection();
+            SqlConnection cnn = GetSQLConnection();
             try {
                 cnn.Open();
             }
             catch (SqlException sqlEx) {
-                String errorText = string.Empty;
-
-
                 MessageBox.Show(@$"{sqlEx.Message}", "Błąd łącczenia z serwerem");
                 return false;
             }
