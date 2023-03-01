@@ -20,9 +20,38 @@ namespace TkompWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        DataAccess da;
         public MainWindow()
         {
             InitializeComponent();
+            da = new DataAccess();
+        }
+
+        private void DBTestButton_Click(object sender, RoutedEventArgs e) {
+
+            DBGetDataButton.IsEnabled = false;
+            dataGrid.ItemsSource = null;
+
+            if (LoginText.Text == string.Empty || PasswordText.Password == string.Empty) {
+                MessageBox.Show("Proszę uzupełnić pole Login/Hasło");
+                return;
+            }
+
+            da.Login = LoginText.Text;
+            da.Password = PasswordText.Password;
+            PasswordText.Password = string.Empty;
+            bool Successful = da.SetConnection();
+
+            if (Successful) {
+                MessageBox.Show("Połączenie powiodło się!","Test połączenia");
+                DBGetDataButton.IsEnabled = true;
+            };
+            
+
+        }
+
+        private void DBGetDataButton_Click(object sender, RoutedEventArgs e) {
+            dataGrid.ItemsSource = (da.GetData()).DefaultView;
         }
     }
 }
