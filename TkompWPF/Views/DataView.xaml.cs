@@ -12,20 +12,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TkompWPF.Models;
+using TkompWPF.ViewModels;
 
-namespace TkompWPF
+namespace TkompWPF.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for DataView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class DataView : UserControl
     {
-        
-        public MainWindow()
+
+        dataViewModel viewModel;
+        public DataView()
         {
             InitializeComponent();
-           
+            viewModel = new dataViewModel();
+            this.DataContext = viewModel;
         }
+
         
     }
 }

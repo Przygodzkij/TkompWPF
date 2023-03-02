@@ -10,31 +10,35 @@ using System.Windows;
 using System.Data.Common;
 using System.Windows.Controls;
 
-namespace TkompWPF {
-    internal class DataAccess {
+namespace TkompWPF.Models
+{
+    internal class DataAccess
+    {
 
-        private string _login = string.Empty;
-        private string _password = string.Empty;
+        
         private static string _connectionServer = @"127.0.0.1";
         private static string _connectionPort = @"1433";
         private static string _connectionDatabase = @"DevData";
-       
-        public string Login {  set { _login = value; } }
-        public string Password {  set { _password = value; } }
 
-        private SqlConnection GetSQLConnection() {
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder() {
+
+        
+
+        private SqlConnection GetSQLConnection(string login, string password)
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder()
+            {
                 DataSource = _connectionServer,
                 InitialCatalog = _connectionDatabase,
-                UserID = _login,
-                Password = _password
+                UserID = login,
+                Password = password
             };
 
             return new SqlConnection(builder.ConnectionString);
         }
 
-        
-        public DataTable GetData() {
+
+        public DataTable GetData(string login, string password)
+        {
             string Query = @"SELECT
                                 sysTab.name AS 'Tabela',
                                 sysCol.name AS 'Kolumna',
@@ -44,25 +48,27 @@ namespace TkompWPF {
                             join sys.systypes sysType on sysType.xtype = sysCol.system_type_id
                             where sysType.name like 'int'";
 
-            SqlCommand Command = new SqlCommand(Query, GetSQLConnection());
+            SqlCommand Command = new SqlCommand(Query, GetSQLConnection(login,password));
             DataTable sqlResultTable = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(Command);
             adapter.Fill(sqlResultTable);
             return sqlResultTable;
         }
-    
+
+
+        public bool VerifyCredentials(string login, string password)
+        {
+
         
-        public bool VerifyConnection(string login, string password) {
 
-            Login = login;
-            Password = password;
-            
 
-            SqlConnection cnn = GetSQLConnection();
-            try {
+            SqlConnection cnn = GetSQLConnection(login,password);
+            try
+            {
                 cnn.Open();
             }
-            catch (SqlException sqlEx) {
+            catch (SqlException sqlEx)
+            {
                 MessageBox.Show(@$"{sqlEx.Message}", "Błąd łącczenia z serwerem");
                 return false;
             }
