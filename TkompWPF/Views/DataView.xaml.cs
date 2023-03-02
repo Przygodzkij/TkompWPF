@@ -20,17 +20,17 @@ namespace TkompWPF.Views
     /// <summary>
     /// Interaction logic for DataView.xaml
     /// </summary>
-    public partial class DataView : UserControl
-    {
+    public partial class DataView : UserControl { 
+        
 
-        dataViewModel viewModel;
         public DataView()
         {
             InitializeComponent();
-            viewModel = new dataViewModel();
-            this.DataContext = viewModel;
+            
+            this.DataContext = new dataViewModel();
         }
 
         
+
     }
 }

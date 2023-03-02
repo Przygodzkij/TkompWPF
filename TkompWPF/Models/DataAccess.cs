@@ -9,6 +9,9 @@ using System.Data.SqlClient;
 using System.Windows;
 using System.Data.Common;
 using System.Windows.Controls;
+using System.Security;
+using System.Runtime.InteropServices;
+using System.Net;
 
 namespace TkompWPF.Models
 {
@@ -16,30 +19,34 @@ namespace TkompWPF.Models
     {
 
         
-        private static string _connectionServer = @"127.0.0.1";
-        private static string _connectionPort = @"1433";
-        private static string _connectionDatabase = @"DevData";
+        private static readonly string _connectionServer = @"127.0.0.1";
+        private static readonly string _connectionDatabase = @"DevData";
 
 
         
 
         private SqlConnection GetSQLConnection(string login, string password)
         {
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder()
-            {
-                DataSource = _connectionServer,
-                InitialCatalog = _connectionDatabase,
-                UserID = login,
-                Password = password
-            };
-
-            return new SqlConnection(builder.ConnectionString);
+            IntPtr bstr = IntPtr.Zero;
+            
+           
+                
+                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder() {
+                    DataSource = _connectionServer,
+                    InitialCatalog = _connectionDatabase,
+                    UserID = login,
+                    Password = password
+                };
+                return new SqlConnection(builder.ConnectionString);
         }
 
 
-        public DataTable GetData(string login, string password)
+        public DataTable GetData(NetworkCredential credentials)
         {
-            string Query = @"SELECT
+            DataTable sqlResultTable = new DataTable();
+
+            try {
+                string Query = @"SELECT
                                 sysTab.name AS 'Tabela',
                                 sysCol.name AS 'Kolumna',
                                 sysType.name As 'Typ'
@@ -48,31 +55,33 @@ namespace TkompWPF.Models
                             join sys.systypes sysType on sysType.xtype = sysCol.system_type_id
                             where sysType.name like 'int'";
 
-            SqlCommand Command = new SqlCommand(Query, GetSQLConnection(login,password));
-            DataTable sqlResultTable = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(Command);
-            adapter.Fill(sqlResultTable);
+                SqlCommand Command = new SqlCommand(Query, GetSQLConnection(credentials.UserName, credentials.Password));
+                SqlDataAdapter adapter = new SqlDataAdapter(Command);
+                adapter.Fill(sqlResultTable);
+            }catch (Exception ex) {
+
+                throw new Exception(@$"Wystąpił błąd przy ładowaniu danych:{ex.Message}");
+            }
+                
+            
+            
             return sqlResultTable;
         }
 
 
-        public bool VerifyCredentials(string login, string password)
+        public bool VerifyCredentials(NetworkCredential credentials)
         {
+            
 
-        
 
-
-            SqlConnection cnn = GetSQLConnection(login,password);
-            try
-            {
+            SqlConnection cnn = GetSQLConnection(credentials.UserName, credentials.Password);
+            try {
                 cnn.Open();
             }
-            catch (SqlException sqlEx)
-            {
-                MessageBox.Show(@$"{sqlEx.Message}", "Błąd łącczenia z serwerem");
-                return false;
+            catch (SqlException sqlEx) {
+                throw new Exception(@$"Weryfikacja nieudana:{sqlEx.Message}");
             }
-            cnn.Close();
+            finally { cnn.Close(); }
             return true;
         }
 

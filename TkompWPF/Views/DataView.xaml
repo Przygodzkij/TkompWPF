@@ -32,17 +32,15 @@
 
 
                 <Label x:Name="LoginLabel" Content="Login:" Grid.Column="0" Grid.Row="0"/>
-                <TextBox x:Name="LoginText" Height="20" Width="100" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"/>
+                <TextBox Text="{Binding Path=Credentials.UserName}" x:Name="LoginText" Height="20" Width="100" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"/>
                 <Label x:Name="PasswordLabel" Content="Password:" Grid.Column="0" Grid.Row="1"/>
-                <PasswordBox x:Name="PasswordText" Height="20" Width="100" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"  />
-
-                <Button x:Name="TestButton" Content="Testuj połączenie" Grid.Column="0" Grid.Row="2" Click="TestButton_Click"/>
-                <Button x:Name="GetDataButton" Content="Załaduj dane" Grid.Column="1" Grid.Row="2" IsEnabled="False" Click="GetDataButton_Click"/>
-                <TextBlock x:Name="MessageTextBlock" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" ></TextBlock>
+                <TextBox Text="{Binding Path=Credentials.Password}" x:Name="PasswordText"  Height="20" Width="100" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"  />
+                <Button Command="{Binding Path=CheckConnectionCommand}" x:Name="TestButton" Content="Testuj połączenie" Grid.Column="0" Grid.Row="2" />
+                <Button Command="{Binding Path=LoadDataCommand}"  x:Name="GetDataButton" Content="Załaduj dane" Grid.Column="1" Grid.Row="2" IsEnabled="{Binding Path=EnableDataLoading}"/>
             </Grid>
 
         </GroupBox>
-        <DataGrid x:Name="dataGrid" Grid.Row="1" Grid.ColumnSpan="2" DataContext="{Binding Path=sqlDataTable}"/>
+        <DataGrid x:Name="dataGrid" Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding SqlDataTable}"/>
 
     </Grid>
 </UserControl>
