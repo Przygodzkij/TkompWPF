@@ -17,10 +17,6 @@ namespace TkompWPF.Models
         #region SqlConnection builder
         private SqlConnection GetSQLConnection(string login, string password)
         {
-            IntPtr bstr = IntPtr.Zero;
-
-
-
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder()
             {
                 DataSource = _connectionServer,

@@ -15,13 +15,13 @@ using System.Reflection.Metadata;
 
 namespace TkompWPF.ViewModels
 {
-    public class dataViewModel: INotifyPropertyChanged {
+    public class DataViewModel: INotifyPropertyChanged {
 
         #region INotifyPropertyChanged implementation
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName = null) {
+        protected virtual void OnPropertyChanged(string? propertyName = null) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
@@ -86,7 +86,7 @@ namespace TkompWPF.ViewModels
         #endregion
 
 
-        public dataViewModel() {
+        public DataViewModel() {
 
             dataAccess = new DataAccessModel();
             sqlDataTable = new DataTable();
@@ -97,13 +97,13 @@ namespace TkompWPF.ViewModels
         }
 
         
-        public void clearData() {
+        public void ClearData() {
             SqlDataTable.Clear();
         }
 
         //Loads data from DataAccess
         public void LoadData() {
-            clearData();
+            ClearData();
             try {
                 SqlDataTable = dataAccess.GetData(Credentials);
                 Message = "Pobrano dane!";
@@ -115,7 +115,7 @@ namespace TkompWPF.ViewModels
         //Check if given credentials are valid, and test connection.
         public void CheckConnection() {
 
-            clearData();
+            ClearData();
             EnableDataLoading = false;
 
             if (Credentials.UserName == string.Empty || Credentials.Password == null) {

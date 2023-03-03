@@ -9,11 +9,11 @@ namespace TkompWPF.Views
     public partial class DataView : UserControl
     {
 
-        dataViewModel viewModel;
+        DataViewModel viewModel;
         public DataView()
         {
             InitializeComponent();
-            viewModel = new dataViewModel();
+            viewModel = new DataViewModel();
             //Data binding ViewModel to View
             this.DataContext = viewModel;
         }
