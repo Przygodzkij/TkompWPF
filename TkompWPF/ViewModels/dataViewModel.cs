@@ -27,11 +27,8 @@ namespace TkompWPF.ViewModels
 
         #endregion
 
-
-
         #region DataAccess 
         DataAccessModel dataAccess;
-
         private NetworkCredential _credentials;
 
         public NetworkCredential Credentials {
@@ -39,7 +36,6 @@ namespace TkompWPF.ViewModels
             set { _credentials = value; OnPropertyChanged("Credentials"); }
         }
 
-        
         private DataTable sqlDataTable;
 
         public DataTable SqlDataTable
@@ -47,9 +43,7 @@ namespace TkompWPF.ViewModels
             get { return sqlDataTable; }
             set { sqlDataTable = value; OnPropertyChanged("SqlDataTable"); }
         }
-
         #endregion
-
 
         #region Commands
 
@@ -68,7 +62,6 @@ namespace TkompWPF.ViewModels
 
         #endregion
 
-
         #region UI 
         private string _message;
 
@@ -85,7 +78,6 @@ namespace TkompWPF.ViewModels
         }
         #endregion
 
-
         public DataViewModel() {
 
             dataAccess = new DataAccessModel();
@@ -95,8 +87,6 @@ namespace TkompWPF.ViewModels
             _loadDataCommand = new RelayCommand(LoadData);
             EnableDataLoading = false;
         }
-
-        
         public void ClearData() {
             SqlDataTable.Clear();
         }
@@ -120,7 +110,6 @@ namespace TkompWPF.ViewModels
 
             if (Credentials.UserName == string.Empty || Credentials.Password == null) {
                 Message = "Proszę uzupełnić pole Login/Hasło";
-                
                 return;
             }
 
@@ -135,12 +124,5 @@ namespace TkompWPF.ViewModels
                 Message = ex.Message;
             }
         }
-
-
-
-
-
-
-
     }
 }

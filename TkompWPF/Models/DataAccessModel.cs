@@ -36,8 +36,8 @@ namespace TkompWPF.Models
 
             try
             {
-                /*Queries information about table columns in currently selected database.
-                 Alternativly we could use: 
+                /*Queries information about columns in a table for currently selected database.
+                 Alternatively we could use: 
                  SELECT * FROM INFORMATION_SCHEMA.COLUMNS
                     WHERE TABLE_CATALOG LIKE 'DevData' AND DATA_TYPE LIKE 'int'
                  * */
@@ -56,8 +56,7 @@ namespace TkompWPF.Models
             }
             catch (Exception ex)
             {
-
-                throw new Exception(@$"Wystąpił błąd przy ładowaniu danych:{ex.Message}");
+                throw new Exception(@$"Wystąpił błąd przy ładowaniu danych: {ex.Message}");
             }
 
 
@@ -80,7 +79,7 @@ namespace TkompWPF.Models
             }
             catch (SqlException sqlEx)
             {
-                throw new Exception(@$"Weryfikacja nieudana:{sqlEx.Message}");
+                throw new Exception(@$"Weryfikacja nieudana: {sqlEx.Message}");
             }
             finally { cnn.Close(); }
             return true;

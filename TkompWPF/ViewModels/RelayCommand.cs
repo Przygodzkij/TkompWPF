@@ -14,7 +14,6 @@ namespace TkompWPF.ViewModels {
             DoWork = work;
         }
 
-
         public bool CanExecute(object? parameter) {
             return true;
         }
