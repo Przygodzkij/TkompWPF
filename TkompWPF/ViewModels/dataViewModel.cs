@@ -17,7 +17,7 @@ namespace TkompWPF.ViewModels
 {
     public class dataViewModel: INotifyPropertyChanged {
 
-        #region Notification code
+        #region INotifyPropertyChanged implementation
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -27,6 +27,11 @@ namespace TkompWPF.ViewModels
 
         #endregion
 
+
+
+        #region DataAccess 
+        DataAccessModel dataAccess;
+
         private NetworkCredential _credentials;
 
         public NetworkCredential Credentials {
@@ -34,7 +39,7 @@ namespace TkompWPF.ViewModels
             set { _credentials = value; OnPropertyChanged("Credentials"); }
         }
 
-        DataAccess dataAccess;
+        
         private DataTable sqlDataTable;
 
         public DataTable SqlDataTable
@@ -42,6 +47,11 @@ namespace TkompWPF.ViewModels
             get { return sqlDataTable; }
             set { sqlDataTable = value; OnPropertyChanged("SqlDataTable"); }
         }
+
+        #endregion
+
+
+        #region Commands
 
         private RelayCommand _checkConnectionCommand;
 
@@ -56,7 +66,10 @@ namespace TkompWPF.ViewModels
             set { _loadDataCommand = value; }
         }
 
+        #endregion
 
+
+        #region UI 
         private string _message;
 
         public string Message {
@@ -70,12 +83,12 @@ namespace TkompWPF.ViewModels
             get { return enableDataLoading; }
             set { enableDataLoading = value; OnPropertyChanged("EnableDataLoading"); }
         }
-
+        #endregion
 
 
         public dataViewModel() {
 
-            dataAccess = new DataAccess();
+            dataAccess = new DataAccessModel();
             sqlDataTable = new DataTable();
             Credentials = new NetworkCredential();
             _checkConnectionCommand = new RelayCommand(CheckConnection);
@@ -83,12 +96,12 @@ namespace TkompWPF.ViewModels
             EnableDataLoading = false;
         }
 
-
+        
         public void clearData() {
             SqlDataTable.Clear();
         }
 
-
+        //Loads data from DataAccess
         public void LoadData() {
             clearData();
             try {
@@ -99,6 +112,7 @@ namespace TkompWPF.ViewModels
             }
         }
 
+        //Check if given credentials are valid, and test connection.
         public void CheckConnection() {
 
             clearData();

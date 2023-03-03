@@ -20,8 +20,8 @@
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition  Height="30"/>
@@ -37,6 +37,7 @@
                 <TextBox Text="{Binding Path=Credentials.Password}" x:Name="PasswordText"  Height="20" Width="100" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1"  />
                 <Button Command="{Binding Path=CheckConnectionCommand}" x:Name="TestButton" Content="Testuj połączenie" Grid.Column="0" Grid.Row="2" />
                 <Button Command="{Binding Path=LoadDataCommand}"  x:Name="GetDataButton" Content="Załaduj dane" Grid.Column="1" Grid.Row="2" IsEnabled="{Binding Path=EnableDataLoading}"/>
+                <TextBlock Text="{Binding Path=Message}" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
             </Grid>
 
         </GroupBox>
