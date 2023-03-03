@@ -1,7 +1,7 @@
 # TkompWPF
 
  1. Aplikacja z interfejsem graficznym wykorzytująca WPF (MVVM)
- 2. Łączenie się do bazy danych MSSQL(EXPRESS)
+ 2. Łączenie się do bazy danych MSSQL (EXPRESS)
  3. Autoryzacja na podstawie loginu i hasła (Mixed mode)
  4. Odczytanie z tabeli sytemowej Nazw kolum znajdujące się w bazie DevData 
  	- Wybranie tylko danych o kolumnach typu INT
